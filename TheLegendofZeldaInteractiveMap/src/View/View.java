@@ -1,8 +1,11 @@
 package View;
 
+import java.awt.Adjustable;
 import java.awt.BorderLayout;
+
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.JScrollBar;
 import javax.swing.border.EmptyBorder;
 
 import Controller.Box;
@@ -11,6 +14,8 @@ import Controller.FileManagement;
 import javax.swing.JScrollPane;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.AdjustmentEvent;
+import java.awt.event.AdjustmentListener;
 import java.io.File;
 import java.awt.GridBagLayout;
 import java.awt.Toolkit;
@@ -62,8 +67,8 @@ public class View extends JFrame {
 		setContentPane(contentPane);
 
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.getVerticalScrollBar().setValue(1);
 		contentPane.add(scrollPane, BorderLayout.CENTER);
+		scroll(scrollPane);
 
 		JPanel panel = new JPanel();
 		scrollPane.setViewportView(panel);
@@ -137,8 +142,8 @@ public class View extends JFrame {
 			FileManagement fm = new FileManagement();	
 			try {
 				fm.save(getData(), new File(file.getPath() + ".txt"));
-				JOptionPane.showMessageDialog(null, "Fichero generado con éxito.", 
-						"Información", JOptionPane.INFORMATION_MESSAGE);
+				JOptionPane.showMessageDialog(null, "Map saved.", 
+						"Information", JOptionPane.INFORMATION_MESSAGE);
 			} catch (Exception e) {
 				// TODO: handle exception
 				JOptionPane.showMessageDialog(null, e, "Error", JOptionPane.ERROR_MESSAGE);
@@ -163,5 +168,29 @@ public class View extends JFrame {
 				}
 			}
 		}
+	}
+	public static void scroll(JScrollPane scrollPane) {
+	    JScrollBar verticalBar = scrollPane.getVerticalScrollBar();
+	    AdjustmentListener scroller = new AdjustmentListener() {
+	      
+	        public void adjustmentValueChanged(AdjustmentEvent e) {
+	            Adjustable adjustable = e.getAdjustable();
+	            adjustable.setValue(verticalBar.getMaximum());	      
+	            verticalBar.removeAdjustmentListener(this);
+	            
+	        }
+	    };
+	    verticalBar.addAdjustmentListener(scroller); 
+	    
+	    JScrollBar horizontalBar = scrollPane.getHorizontalScrollBar(); 
+	    AdjustmentListener scroller2 = new AdjustmentListener() {
+	      
+	        public void adjustmentValueChanged(AdjustmentEvent e2) {
+	            Adjustable adjustable2 = e2.getAdjustable();
+	            adjustable2.setValue(horizontalBar.getMaximum() / 3);
+	            horizontalBar.removeAdjustmentListener(this);  
+	        }
+	    };
+	    horizontalBar.addAdjustmentListener(scroller2);
 	}
 }

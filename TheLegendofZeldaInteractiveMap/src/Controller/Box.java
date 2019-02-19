@@ -20,8 +20,14 @@ public class Box extends JButton {
 		setSize(258, 170);
 		this.setBorder(null);
 		this.setMargin(new Insets(0, 0, 0, 0));
-		if (this.img.equals("77.png")) this.setIcon(new ImageIcon(getClass().getClassLoader().getResource("Img/" + this.img)));
-		else this.setIcon(new ImageIcon(getClass().getClassLoader().getResource("Img/zelda.png")));
+		if (this.img.equals("77.png")) {
+			this.setIcon(new ImageIcon(getClass().getClassLoader().getResource("Img/" + this.img)));
+			this.state = 1;
+		}
+		else {
+			this.setIcon(new ImageIcon(getClass().getClassLoader().getResource("Img/zelda.png")));
+			this.state = 0;
+		}
 	}
 	
 	public String getImg() {
