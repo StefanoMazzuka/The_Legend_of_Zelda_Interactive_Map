@@ -1,12 +1,9 @@
 package View;
 
-import java.awt.Adjustable;
 import java.awt.BorderLayout;
-import java.awt.Dimension;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
-import javax.swing.JScrollBar;
 import javax.swing.border.EmptyBorder;
 
 import Controller.Box;
@@ -17,8 +14,6 @@ import javax.swing.SwingUtilities;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.AdjustmentEvent;
-import java.awt.event.AdjustmentListener;
 import java.io.File;
 import java.awt.GridBagLayout;
 import java.awt.Toolkit;
@@ -73,12 +68,10 @@ public class View extends JFrame {
 		contentPane.add(scrollPane, BorderLayout.CENTER);
 
 		SwingUtilities.invokeLater(new Runnable() {
-		    public void run() {
-		    	int h = scrollPane.getHorizontalScrollBar().getMaximum() / 3;
-		    	int v = scrollPane.getVerticalScrollBar().getMaximum();
-		        scrollPane.getHorizontalScrollBar().setValue(h);
-		        scrollPane.getVerticalScrollBar().setValue(v);
-		    }
+			public void run() {
+				scrollPane.getHorizontalScrollBar().setValue(scrollPane.getHorizontalScrollBar().getMaximum() / 3);
+				scrollPane.getVerticalScrollBar().setValue(scrollPane.getVerticalScrollBar().getMaximum());
+			}
 		});
 
 		JPanel panel = new JPanel();
