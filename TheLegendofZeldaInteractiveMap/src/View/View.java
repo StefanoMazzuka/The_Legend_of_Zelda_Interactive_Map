@@ -2,6 +2,7 @@ package View;
 
 import java.awt.Adjustable;
 import java.awt.BorderLayout;
+import java.awt.Dimension;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -12,6 +13,8 @@ import Controller.Box;
 import Controller.FileManagement;
 
 import javax.swing.JScrollPane;
+import javax.swing.SwingUtilities;
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.AdjustmentEvent;
@@ -45,7 +48,7 @@ public class View extends JFrame {
 	public View() {
 		setTitle("The Legend of Zelda");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 1675, 916);
+		setBounds(100, 100, 1300, 700);
 		setLocationRelativeTo(null);
 		setIconImage(Toolkit.getDefaultToolkit().getImage(View.class.getResource("/Img/icon.png")));
 		map = new Box[rows][columns];
@@ -68,7 +71,15 @@ public class View extends JFrame {
 
 		JScrollPane scrollPane = new JScrollPane();
 		contentPane.add(scrollPane, BorderLayout.CENTER);
-		scroll(scrollPane);
+
+		SwingUtilities.invokeLater(new Runnable() {
+		    public void run() {
+		    	int h = scrollPane.getHorizontalScrollBar().getMaximum() / 3;
+		    	int v = scrollPane.getVerticalScrollBar().getMaximum();
+		        scrollPane.getHorizontalScrollBar().setValue(h);
+		        scrollPane.getVerticalScrollBar().setValue(v);
+		    }
+		});
 
 		JPanel panel = new JPanel();
 		scrollPane.setViewportView(panel);
@@ -168,29 +179,5 @@ public class View extends JFrame {
 				}
 			}
 		}
-	}
-	public static void scroll(JScrollPane scrollPane) {
-	    JScrollBar verticalBar = scrollPane.getVerticalScrollBar();
-	    AdjustmentListener scroller = new AdjustmentListener() {
-	      
-	        public void adjustmentValueChanged(AdjustmentEvent e) {
-	            Adjustable adjustable = e.getAdjustable();
-	            adjustable.setValue(verticalBar.getMaximum());	      
-	            verticalBar.removeAdjustmentListener(this);
-	            
-	        }
-	    };
-	    verticalBar.addAdjustmentListener(scroller); 
-	    
-	    JScrollBar horizontalBar = scrollPane.getHorizontalScrollBar(); 
-	    AdjustmentListener scroller2 = new AdjustmentListener() {
-	      
-	        public void adjustmentValueChanged(AdjustmentEvent e2) {
-	            Adjustable adjustable2 = e2.getAdjustable();
-	            adjustable2.setValue(horizontalBar.getMaximum() / 3);
-	            horizontalBar.removeAdjustmentListener(this);  
-	        }
-	    };
-	    horizontalBar.addAdjustmentListener(scroller2);
 	}
 }
